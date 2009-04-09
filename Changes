@@ -1,0 +1,6 @@
+Revision history for Perl extension Win32::Process::Hide.
+
+0.2  Thu Apr  9 12:38:14 2009
+	- original version; created by h2xs 1.23 with options
+		-A Win32::Process::Hide
+
