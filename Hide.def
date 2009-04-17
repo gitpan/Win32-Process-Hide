@@ -1,0 +1,4 @@
+EXPORTS
+  boot_Win32__Process__Hide
+  _boot_Win32__Process__Hide = boot_Win32__Process__Hide
+  

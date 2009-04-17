@@ -16,17 +16,12 @@ INSTALLATION
 
 To install this module type the following:
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+   nmake install
+	or just execute "install.bat"
 
 DEPENDENCIES
 
 COPYRIGHT AND LICENCE
-
-Put the correct copyright and licence information here.
-
 Copyright (C) 2009 by Baggio, Kwok Lok Chung 
 
 This library is free software; you can redistribute it and/or modify
