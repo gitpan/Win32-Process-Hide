@@ -1,5 +1,5 @@
 name: Win32-Process-Hide
-version: 1.0
+version: 0.2
 version_from: Hide.pm
 installdirs: site
 requires:

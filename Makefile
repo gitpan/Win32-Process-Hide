@@ -60,11 +60,11 @@ DIRFILESEP = ^\
 DFSEP = $(DIRFILESEP)
 NAME = Win32::Process::Hide
 NAME_SYM = Win32_Process_Hide
-VERSION = 1.0
+VERSION = 0.2
 VERSION_MACRO = VERSION
-VERSION_SYM = 1_0
+VERSION_SYM = 0_2
 DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
-XS_VERSION = 1.0
+XS_VERSION = 0.2
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 INST_ARCHLIB = blib\arch
@@ -272,7 +272,7 @@ RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
 DISTNAME = Win32-Process-Hide
-DISTVNAME = Win32-Process-Hide-1.0
+DISTVNAME = Win32-Process-Hide-0.2
 
 
 # --- MakeMaker macro section:
@@ -575,7 +575,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
 	$(NOECHO) $(ECHO) "--- #YAML:1.0" > META_new.yml
 	$(NOECHO) $(ECHO) "name:                Win32-Process-Hide" >> META_new.yml
-	$(NOECHO) $(ECHO) "version:             1.0" >> META_new.yml
+	$(NOECHO) $(ECHO) "version:             0.2" >> META_new.yml
 	$(NOECHO) $(ECHO) "abstract:            Perl extension for hiding your process." >> META_new.yml
 	$(NOECHO) $(ECHO) "license:             ~" >> META_new.yml
 	$(NOECHO) $(ECHO) "author:              " >> META_new.yml
@@ -946,7 +946,7 @@ testdb_static :: pure_all $(MAP_TARGET)
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
-	$(NOECHO) $(ECHO) "<SOFTPKG NAME=\"$(DISTNAME)\" VERSION=\"1,0,0,0\">" > $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "<SOFTPKG NAME=\"$(DISTNAME)\" VERSION=\"0,2,0,0\">" > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) "    <TITLE>$(DISTNAME)</TITLE>" >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) "    <ABSTRACT>Perl extension for hiding your process.</ABSTRACT>" >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) "    <AUTHOR>Baggio, Kwok Lok Chung &lt;lokchungk@hotmail.com&gt;</AUTHOR>" >> $(DISTNAME).ppd

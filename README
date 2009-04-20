@@ -1,4 +1,4 @@
-Win32-Process-Hide version 0.2
+Win32-Process-Hide version 1.4 
 ===============================
 
 The README is used to introduce the module and provide instructions on
@@ -15,13 +15,13 @@ decide whether fixes for the module are worth downloading.
 INSTALLATION
 
 To install this module type the following:
-
-   nmake install
-	or just execute "install.bat"
-
+ 	 Just execute install.bat
 DEPENDENCIES
 
 COPYRIGHT AND LICENCE
+
+Put the correct copyright and licence information here.
+
 Copyright (C) 2009 by Baggio, Kwok Lok Chung 
 
 This library is free software; you can redistribute it and/or modify

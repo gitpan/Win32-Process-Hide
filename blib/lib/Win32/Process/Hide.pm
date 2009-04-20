@@ -25,7 +25,7 @@ our @EXPORT = qw(
 	HideProcess
 );
 
-our $VERSION = '1.0';
+our $VERSION = '1.4';
 
 require XSLoader;
 XSLoader::load('Win32::Process::Hide', $VERSION);
