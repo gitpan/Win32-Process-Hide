@@ -1,12 +1,6 @@
-dll.base
-dll.exp
-Hide.bs
-Hide.c
-Hide.def
-Hide.o
 Hide.xs
-install.bat
 lib/Win32/Process/Hide.pm
+main.cpp
 Makefile.PL
 MANIFEST			This list of files
 META.yml
