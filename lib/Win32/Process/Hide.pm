@@ -25,7 +25,7 @@ our @EXPORT = qw(
 	HideProcess
 );
 
-our $VERSION = '1.8';
+our $VERSION = '1.82';
 
 require XSLoader;
 XSLoader::load('Win32::Process::Hide', $VERSION);
@@ -49,17 +49,19 @@ Win32::Process::Hide - Perl extension for hiding your process.
 
 This module allow you to hide your process,
 to prevent some negligent user terminate your process.
-PLEASE USE IT IN RIGHT WAYS
 
 =head2 EXPORT
 
-None by default.
+	HideProcess()
 
 =head1 SEE ALSO
+	My Mail: L<rootkwok@cpan.org>
+	Install Win32::Process::Hide with PPM:
+	ppm install http://sites.google.com/site/lokchungk/mod/Win32-Process-Hide.ppd?attredirects=0
 
 =head1 AUTHOR
 
-Baggio, Kwok Lok Chung E<lt>lokchungk@hotmail.comE<gt>
+Baggio, Kwok Lok Chung L<rootkwok@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
