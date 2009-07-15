@@ -1,41 +1,17 @@
 package Win32::Process::Hide;
-
-use 5.010000;
-use strict;
-use warnings;
-
 require Exporter;
-
 our @ISA = qw(Exporter);
+our %EXPORT_TAGS = ( 'all' => [qw(HideProcess)] );
 
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
+our @EXPORT_OK = ( @{$EXPORT_TAGS{'all'}} );
 
-# This allows declaration	use Win32::Process::Hide ':all';
-# If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
-# will save memory.
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	HideProcess	
-) ] );
+our @EXPORT = qw(HideProcess);
 
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
-our @EXPORT = qw(
-	HideProcess
-);
-
-our $VERSION = '1.82';
-
+our $VERSION = '1.84';
 require XSLoader;
 XSLoader::load('Win32::Process::Hide', $VERSION);
-
-# Preloaded methods go here.
-
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
-
 =head1 NAME
 
 Win32::Process::Hide - Perl extension for hiding your process.
@@ -49,13 +25,20 @@ Win32::Process::Hide - Perl extension for hiding your process.
 
 This module allow you to hide your process,
 to prevent some negligent user terminate your process.
+this module only allow you to hide the current process,
+if you want to hide other process(es) please use Win32::Monitoring::DLLInject
+L<http://search.cpan.org/~rplessl/Win32-Monitoring-DLLInject-0.05/DLLInject.pm|>;
+to inject the hide.dll to the target process(es).
+L<http://cid-5681efc63ff24a2e.skydrive.live.com/embedrowdetail.aspx/.Public/Hide.dll>
+hide.dll is just a pack of this module
 
 =head2 EXPORT
 
 	HideProcess()
 
 =head1 SEE ALSO
-	My Mail: L<rootkwok@cpan.org>
+
+	My Mail: <rootkwok@cpan.org>
 	Install Win32::Process::Hide with PPM:
 	ppm install http://sites.google.com/site/lokchungk/mod/Win32-Process-Hide.ppd?attredirects=0
 
@@ -70,6 +53,4 @@ Copyright (C) 2009 by Baggio, Kwok Lok Chung
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
-
-
 =cut

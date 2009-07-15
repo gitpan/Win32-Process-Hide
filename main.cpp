@@ -2,7 +2,6 @@
 #include <Accctrl.h>
 #include <Aclapi.h>
 #include <windows.h>
-#include <stdio.h>
 #pragma comment(lib,"advapi32.lib")
 #define NT_SUCCESS(Status)((NTSTATUS)(Status) >= 0)
 #define STATUS_INFO_LENGTH_MISMATCH ((NTSTATUS)0xC0000004L)

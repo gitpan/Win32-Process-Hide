@@ -1,8 +1,8 @@
-use 5.010000;
+#use 5.010000;
 use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
-$CC = 'g++';
+$CC = $Config::Config{'ld'};
 WriteMakefile(
     NAME              => 'Win32::Process::Hide',
     VERSION_FROM      => 'lib/Win32/Process/Hide.pm', # finds $VERSION
