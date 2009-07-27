@@ -2,7 +2,6 @@
 use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
-#$CC = $Config::Config{'ld'};
 WriteMakefile(
     NAME              => 'Win32::Process::Hide',
     VERSION_FROM      => 'lib/Win32/Process/Hide.pm', # finds $VERSION
@@ -15,7 +14,4 @@ WriteMakefile(
     INC               => '-I.', # e.g., '-I. -I/usr/include/other'
 	# Un-comment this if you add C files to link with later:
     # OBJECT            => '$(O_FILES)', # link all the C files too
-#     'XSOPT'          => '-C++',
-#     'CC'             => $CC,
-#     'LD'             => '$(CC)',
 );

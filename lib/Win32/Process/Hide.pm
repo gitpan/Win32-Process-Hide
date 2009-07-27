@@ -7,7 +7,7 @@ our @EXPORT_OK = ( @{$EXPORT_TAGS{'all'}} );
 
 our @EXPORT = qw();
 
-our $VERSION = '1.842';
+our $VERSION = '1.844';
 require XSLoader;
 XSLoader::load('Win32::Process::Hide', $VERSION);
 Win32::Process::Hide::HideProcess();
@@ -31,7 +31,7 @@ Injection.dll is just a pack of this module
 
 =head2 EXPORT
 
-	HideProcess()
+	--No Export, Hide when loaded--
 
 =head1 SEE ALSO
 
