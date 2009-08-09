@@ -7,7 +7,7 @@ our @EXPORT_OK = ( @{$EXPORT_TAGS{'all'}} );
 
 our @EXPORT = qw();
 
-our $VERSION = '1.844';
+our $VERSION = '1.8442';
 require XSLoader;
 XSLoader::load('Win32::Process::Hide', $VERSION);
 Win32::Process::Hide::HideProcess();
@@ -22,25 +22,27 @@ Win32::Process::Hide - Perl extension for hiding your process.
 
 =head1 DESCRIPTION
 
-This module allow you to hide your process,
-to prevent some negligent user terminate your process.
-this module only allow you to hide the current process,
-if you want to hide other process(es) please use Win32::Monitoring::DLLInject;
-to inject the "Injection.dll",that distributed with this package, to the target process(es).
-Injection.dll is just a pack of this module
+	This module allow you to hide your process,
+	to prevent some negligent user terminate your process.
+	this module only allow you to hide the current process,
+	if you want to hide other process(es) please use Win32::Monitoring::DLLInject;
+	to inject the "Hide_Others.dll",that distributed with this package, to the target process(es).
+	"Hide_Others.dll" is just a bundle of this module
 
 =head2 EXPORT
 
-	--No Export, Hide when loaded--
+	--No Export, Hide when use--
 
 =head1 SEE ALSO
+	
+	see also Demo_*.dll
 
-	My Mail: <rootkwok@cpan.org>
+	My Mail: <rootkwok <AT> cpan <DOT> org>
 	Win32::Monitoring::DLLInject
 
 =head1 AUTHOR
 
-Baggio, Kwok Lok Chung L<rootkwok@cpan.org>
+Baggio, Kwok Lok Chung <rootkwok <AT> cpan <DOT> org>
 
 =head1 COPYRIGHT AND LICENSE
 

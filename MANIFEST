@@ -1,7 +1,8 @@
+Demo_1.pl
+Demo_2.pl
 Hide.xs
-Injection.dll
+Hide_Others.dll
 lib/Win32/Process/Hide.pm
 main.c
 Makefile.PL
 MANIFEST			This list of files
-test.pl

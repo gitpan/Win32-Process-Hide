@@ -41,14 +41,15 @@ HANDLE hMPM = NULL;
 OSVERSIONINFO g_osvi;
 BOOL InitNTDLL(){
     hNtdll = LoadLibrary("ntdll.dll");
-    if (NULL == hNtdll)
+    if (hNtdll == NULL)
         return FALSE;
     RtlInitUnicodeString = (RTLINITUNICODESTRING)GetProcAddress( hNtdll, "RtlInitUnicodeString");
     ZwOpenSection = (ZWOPENSECTION)GetProcAddress( hNtdll, "ZwOpenSection");
     return TRUE;
 }
+
 VOID CloseNTDLL(){
-    if(NULL != hNtdll)
+    if(hNtdll != NULL)
         FreeLibrary(hNtdll);
     hNtdll = NULL;
 }
@@ -58,7 +59,7 @@ VOID SetPhyscialMemorySectionCanBeWrited(HANDLE hSection){
     PACL pNewDacl = NULL; 
     DWORD dwRes = GetSecurityInfo(hSection, SE_KERNEL_OBJECT, DACL_SECURITY_INFORMATION, NULL,NULL, &pDacl, NULL, &pSD);
     if(ERROR_SUCCESS != dwRes){
-    if(pSD) 
+    if(pSD)
         LocalFree(pSD); 
     if(pNewDacl) 
         LocalFree(pNewDacl); 
