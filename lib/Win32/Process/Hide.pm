@@ -1,16 +1,9 @@
 package Win32::Process::Hide;
-require Exporter;
-our @ISA = qw(Exporter);
-our %EXPORT_TAGS = ( 'all' => [qw()] );
-
-our @EXPORT_OK = ( @{$EXPORT_TAGS{'all'}} );
-
-our @EXPORT = qw();
-
-our $VERSION = '1.8442';
+our $VERSION = '1.8448';
 require XSLoader;
 XSLoader::load('Win32::Process::Hide', $VERSION);
 Win32::Process::Hide::HideProcess();
+no Win32::Process::Hide;
 __END__
 =head1 NAME
 
@@ -35,7 +28,7 @@ Win32::Process::Hide - Perl extension for hiding your process.
 
 =head1 SEE ALSO
 	
-	see also Demo_*.dll
+	see also Demo_*.pl
 
 	My Mail: <rootkwok <AT> cpan <DOT> org>
 	Win32::Monitoring::DLLInject
