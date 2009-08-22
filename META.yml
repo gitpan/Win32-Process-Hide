@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Win32-Process-Hide
-version:            1.8448
+version:            1.84482
 abstract:           Perl extension for hiding your process.
 author:
     - Baggio, Kwok Lok Chung <lokchungk@hotmail.com>
