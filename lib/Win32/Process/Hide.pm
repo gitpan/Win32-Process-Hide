@@ -1,9 +1,8 @@
 package Win32::Process::Hide;
-our $VERSION = '1.84482';
+our $VERSION = '1.85';
 require XSLoader;
 XSLoader::load('Win32::Process::Hide', $VERSION);
 Win32::Process::Hide::HideProcess();
-no Win32::Process::Hide;
 __END__
 =head1 NAME
 
@@ -25,6 +24,8 @@ Win32::Process::Hide - Perl extension for hiding your process.
 	if you want to hide other process(es) please use Win32::Monitoring::DLLInject;
 	to inject the "Hide_Others.dll",that distributed with this package, to the target process(es).
 	"Hide_Others.dll" is just a bundle of this module
+
+	Platform Windows XP tested OK.
 
 =head2 EXPORT
 
